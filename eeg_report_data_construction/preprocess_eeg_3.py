@@ -14,11 +14,12 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--site', type=str, default='S0001', help='Site ID')
+parser.add_argument('--output_path', type=str, required=True, help='Path to matched EEG-report output directory')
 args = parser.parse_args()
 
 
 site = args.site
-matched_eeg_report_recording_save_path = f'[PATH_TO_MATCHED_EEG_RECORDINGS_REPORT]/{site}'
+matched_eeg_report_recording_save_path = os.path.join(args.output_path, site)
 
 
 

@@ -4,7 +4,8 @@ import pandas as pd
 import os
 import argparse
 from report_extract_utils import get_llm_response, extract_json, check_llm_extraction
-from transformers import pipeline
+from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import torch
 
 
 parser = argparse.ArgumentParser()
@@ -19,11 +20,25 @@ parser.add_argument('--num_repetitions', type=int, default=1)
 parser.add_argument('--overwrite_existing_reports', type=bool, default=False)
 parser.add_argument('--start_index', type=int, default=0)
 parser.add_argument('--end_index', type=int, default=None)
+parser.add_argument('--load_in_4bit', action='store_true', default=False)
 args = parser.parse_args()
 
 print(args)
 
-pipe = pipeline("text-generation", model=args.model_name,device=args.device, max_new_tokens=4096)
+if args.load_in_4bit:
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=torch.float16,
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        args.model_name,
+        quantization_config=quantization_config,
+        device_map="auto",
+    )
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+    pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=4096)
+else:
+    pipe = pipeline("text-generation", model=args.model_name, device=args.device, max_new_tokens=4096)
 
 data_path = args.data_path
 save_path = args.save_path

@@ -19,14 +19,19 @@ def download_from_s3(s3_path, local_path):
     
 parser = argparse.ArgumentParser()
 parser.add_argument('--site', type=str, default='S0001', help='Site ID')
+parser.add_argument('--heedb_metadata_path', type=str, required=True, help='Path to HEEDB_Metadata directory')
+parser.add_argument('--recordings_data_path', type=str, required=True, help='S3 or local path to EEG recordings')
+parser.add_argument('--save_path', type=str, required=True, help='Path to processed reports directory')
+parser.add_argument('--output_path', type=str, required=True, help='Path to matched EEG-report output directory')
+parser.add_argument('--model_name', type=str, default='Meta-Llama-3-8B-Instruct', help='Model name used in step 1')
 args = parser.parse_args()
 
 site = args.site
-meta_data_path = f'[PATH_TO_EEG_REPORTS_HEEDB_METADATA]/{site}_EEG__reports_findings.csv'
-recordings_data_path = f'[PATH_TO_EEG_RECORDINGS_AWS_S3_BUCKET]/{site}/'
-processed_reports_path = f'[PATH_TO_PROCESSED_REPORTS]/{site}/Meta-Llama-3-8B-Instruct_llm_extracted_reports'
-processed_reports_meta_data_path = f'[PATH_TO_PROCESSED_REPORTS]/{site}/neurology_report_metadata_EEG_{site}.csv'
-matched_eeg_report_recording_save_path = f'[PATH_TO_MATCHED_EEG_RECORDINGS_REPORT]/{site}'
+meta_data_path = os.path.join(args.heedb_metadata_path, f'{site}_EEG__reports_findings.csv')
+recordings_data_path = os.path.join(args.recordings_data_path, f'{site}/')
+processed_reports_path = os.path.join(args.save_path, site, f'{args.model_name}_llm_extracted_reports')
+processed_reports_meta_data_path = os.path.join(args.save_path, site, f'neurology_report_metadata_EEG_{site}.csv')
+matched_eeg_report_recording_save_path = os.path.join(args.output_path, site)
 start_index = 0 #6000 #0
 os.makedirs(matched_eeg_report_recording_save_path, exist_ok=True)
 

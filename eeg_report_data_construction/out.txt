@@ -1,0 +1,119 @@
+Traceback (most recent call last):
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/extract_and_format_neurology_reports_1.py", line 6, in <module>
+    from report_extract_utils import get_llm_response, extract_json, check_llm_extraction
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/report_extract_utils.py", line 1, in <module>
+    from transformers import pipeline
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2154, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2184, in _get_module
+    raise e
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2182, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/pipelines/__init__.py", line 28, in <module>
+    from ..models.auto.feature_extraction_auto import FEATURE_EXTRACTOR_MAPPING, AutoFeatureExtractor
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/models/auto/feature_extraction_auto.py", line 29, in <module>
+    from .auto_factory import _LazyAutoMapping
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 43, in <module>
+    from ...generation import GenerationMixin
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2154, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2184, in _get_module
+    raise e
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2182, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/generation/utils.py", line 63, in <module>
+    from .candidate_generator import (
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/transformers/generation/candidate_generator.py", line 29, in <module>
+    from sklearn.metrics import roc_curve
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/__init__.py", line 73, in <module>
+    from .base import clone  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/base.py", line 19, in <module>
+    from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/__init__.py", line 9, in <module>
+    from ._chunking import gen_batches, gen_even_slices
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/_chunking.py", line 11, in <module>
+    from ._param_validation import Interval, validate_params
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/_param_validation.py", line 17, in <module>
+    from .validation import _is_arraylike_not_scalar
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/validation.py", line 21, in <module>
+    from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/_array_api.py", line 20, in <module>
+    from .fixes import parse_version
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/sklearn/utils/fixes.py", line 16, in <module>
+    import scipy.stats
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/stats/__init__.py", line 628, in <module>
+    from ._stats_py import *
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/stats/_stats_py.py", line 40, in <module>
+    from scipy.spatial import distance_matrix
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/spatial/__init__.py", line 117, in <module>
+    from ._geometric_slerp import geometric_slerp
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/spatial/_geometric_slerp.py", line 7, in <module>
+    from scipy.spatial.distance import euclidean
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/spatial/distance.py", line 117, in <module>
+    from . import _hausdorff, _distance_pybind, _distance_wrap
+ImportError: /lib/x86_64-linux-gnu/libstdc++.so.6: version `CXXABI_1.3.15' not found (required by /home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/scipy/spatial/_distance_pybind.cpython-311-x86_64-linux-gnu.so)
+/home/tbeck/repos/CELM/eeg_report_data_construction/match_reports_with_recordings_2.py:34: DtypeWarning: Columns (37,38) have mixed types. Specify dtype option on import or set low_memory=False.
+  eeg_reports_meta_data_csv = pd.read_csv(meta_data_path)
+Traceback (most recent call last):
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/match_reports_with_recordings_2.py", line 39, in <module>
+    processed_reports_meta_data_csv = pd.read_csv(processed_reports_meta_data_path)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/tbeck/repos/CELM/dataset/notes_path/S0001/neurology_report_metadata_EEG_S0001.csv'
+Traceback (most recent call last):
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/preprocess_eeg_3.py", line 7, in <module>
+    import matplotlib.pyplot as plt
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/matplotlib/__init__.py", line 161, in <module>
+    from . import _api, _version, cbook, _docstring, rcsetup
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/matplotlib/cbook.py", line 32, in <module>
+    from matplotlib import _api, _c_internal_utils
+ImportError: /lib/x86_64-linux-gnu/libstdc++.so.6: version `CXXABI_1.3.15' not found (required by /home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/matplotlib/_c_internal_utils.cpython-311-x86_64-linux-gnu.so)
+/home/tbeck/repos/CELM/eeg_report_data_construction/create_description_df_4_eff.py:141: DtypeWarning: Columns (37,38) have mixed types. Specify dtype option on import or set low_memory=False.
+  eeg_reports_meta_data_csv = pd.read_csv(meta_data_path)
+Traceback (most recent call last):
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/create_description_df_4_eff.py", line 227, in <module>
+    main()
+  File "/home/tbeck/repos/CELM/eeg_report_data_construction/create_description_df_4_eff.py", line 147, in main
+    processed_reports_meta_data_csv = pd.read_csv(processed_reports_meta_data_path)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/home/tbeck/miniconda3/envs/CELM/lib/python3.11/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/tbeck/repos/CELM/dataset/notes_path/S0001/neurology_report_metadata_EEG_S0001.csv'

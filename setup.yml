@@ -6,9 +6,6 @@ channels:
 dependencies:
   - python=3.11
   - pip
-  - pytorch=2.7.*
-  - torchvision=0.22.*
-  - pytorch-cuda=12.6
   - numpy=1.26.*
   - scipy
   - scikit-learn
@@ -24,6 +21,8 @@ dependencies:
   - pip:
       - accelerate==1.12.0
       - bert-score==0.3.13
+      - torch
+      - torchvision
       - datasets==4.4.2
       - evaluate==0.4.6
       - einops==0.8.1

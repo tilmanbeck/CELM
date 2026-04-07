@@ -1,38 +1,76 @@
-# Extract and format neurology reports using Meta-Llama-3-8B-Instruct
-site='[SITE_ID]' # S0001 or S0002
-data_path='[PATH_TO_NEUROLOGY_REPORTS]' # I0001_neurology_reports
-HEEDB_patients_path='[PATH_TO_HEEDB_METADATA]' # HEEDB_Metadata
-save_path='[PATH_TO_SAVE_PROCESSED_NEUROLOGY_REPORTS]'
-notes_path='[PATH_TO_SAVED_PROCESSED_NEUROLOGY_REPORTS]'
-site_id_filter='S0001'
-model_name='meta-llama/Meta-Llama-3-8B-Instruct' 
+# ============================================================
+# Configuration — set all paths here once
+# ============================================================
+export LD_LIBRARY_PATH="/home/tbeck/miniconda3/envs/CELM/lib:$LD_LIBRARY_PATH"
+
+# Source data (from BDSP, read-only)
+data_path='/home/tbeck/data/heedb/neurology_reports'       # contains I0001_Neurology_Reports CSV + year folders with .txt
+notes_path='/home/tbeck/data/heedb/neurology_reports'       # where unzipped year/<report>.txt files live
+HEEDB_metadata_path='/home/tbeck/data/heedb/HEEDB_Metadata' # contains HEEDB_patients.csv, S0001_EEG__reports_findings.csv
+recordings_s3_path='/home/tbeck/data/heedb/EEG'             # S3 (or local) base path for EEG recordings
+
+# Generated data (outputs from this pipeline)
+save_path='/home/tbeck/repos/CELM/dataset/processed_reports' # step 1 output: LLM-extracted reports
+output_path='/home/tbeck/repos/CELM/dataset/matched_reports' # steps 2-4 output: matched EEG-report pairs
+
+# Pipeline parameters
+site='S0001'
+model_name='meta-llama/Meta-Llama-3-8B-Instruct'
 device=0
 num_repetitions=5
 overwrite_existing_reports=False
 start_index=0
 # end_index=2000
 
+# Short model name (used for folder naming by step 1)
+if [[ "$model_name" == */* ]]; then
+    model_short_name="${model_name##*/}"
+else
+    model_short_name="$model_name"
+fi
 
-python extract_and_format_neurology_reports_1.py  --data_path $data_path \
-                                                --save_path $save_path \
-                                                --notes_path $notes_path \
-                                                --site_id_filter $site_id_filter \
-                                                --HEEDB_patients_path $HEEDB_patients_path \
-                                                --model_name $model_name \
-                                                --device $device \
-                                                --num_repetitions $num_repetitions \
-                                                --overwrite_existing_reports $overwrite_existing_reports \
-                                                --start_index $start_index \
-                                                # --end_index $end_index
+# ============================================================
+# Step 1: Extract and format neurology reports using LLM
+# ============================================================
+python extract_and_format_neurology_reports_1.py \
+    --data_path "$data_path" \
+    --save_path "$save_path" \
+    --notes_path "$notes_path" \
+    --site_id_filter "$site" \
+    --HEEDB_patients_path "$HEEDB_metadata_path" \
+    --model_name "$model_name" \
+    --device $device \
+    --num_repetitions $num_repetitions \
+    --overwrite_existing_reports $overwrite_existing_reports \
+    --start_index $start_index \
+    --load_in_4bit
+    # --end_index $end_index
 
+# ============================================================
+# Step 2: Match reports with recordings, download from AWS S3
+# ============================================================
+python match_reports_with_recordings_2.py \
+    --site "$site" \
+    --heedb_metadata_path "$HEEDB_metadata_path" \
+    --recordings_data_path "$recordings_s3_path" \
+    --save_path "$save_path" \
+    --output_path "$output_path" \
+    --model_name "$model_short_name"
 
-# Match reports with recordings and download the recordings directly from AWS S3 # TODO: Update the paths in the script
-python match_reports_with_recordings_2.py --site $site
+# ============================================================
+# Step 3: Preprocess the EEG recordings
+# ============================================================
+python preprocess_eeg_3.py \
+    --site "$site" \
+    --output_path "$output_path"
 
-
-# Preprocess the recordings # TODO: Update the paths in the script
-python preprocess_eeg_3.py --site $site
-
-# Create description_df # TODO: Update the paths in the script
-python create_description_df_4_eff.py --site $site --num_workers 8
-
+# ============================================================
+# Step 4: Create description dataframe
+# ============================================================
+python create_description_df_4_eff.py \
+    --site "$site" \
+    --num_workers 8 \
+    --heedb_metadata_path "$HEEDB_metadata_path" \
+    --save_path "$save_path" \
+    --output_path "$output_path" \
+    --model_name "$model_short_name"

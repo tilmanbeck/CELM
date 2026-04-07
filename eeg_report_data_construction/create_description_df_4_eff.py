@@ -125,16 +125,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--site', type=str, default='S0002', help='site name')
     parser.add_argument('--num_workers', type=int, default=8, help='number of parallel workers')
+    parser.add_argument('--heedb_metadata_path', type=str, required=True, help='Path to HEEDB_Metadata directory')
+    parser.add_argument('--save_path', type=str, required=True, help='Path to processed reports directory')
+    parser.add_argument('--output_path', type=str, required=True, help='Path to matched EEG-report output directory')
+    parser.add_argument('--model_name', type=str, default='Meta-Llama-3-8B-Instruct', help='Model name used in step 1')
     args = parser.parse_args()
-    
+
     site = args.site
     num_workers = args.num_workers
-    
+
     # Define paths
-    meta_data_path = f'[PATH_TO_EEG_REPORTS_HEEDB_METADATA]/{site}_EEG__reports_findings.csv'
-    processed_reports_path = f'[PATH_TO_PROCESSED_REPORTS]/{site}/Meta-Llama-3-8B-Instruct_llm_extracted_reports'
-    processed_reports_meta_data_path = f'[PATH_TO_PROCESSED_REPORTS]/{site}/neurology_report_metadata_EEG_{site}.csv'
-    matched_eeg_report_recording_save_path = f'[PATH_TO_MATCHED_EEG_RECORDINGS_REPORT]/{site}'
+    meta_data_path = os.path.join(args.heedb_metadata_path, f'{site}_EEG__reports_findings.csv')
+    processed_reports_path = os.path.join(args.save_path, site, f'{args.model_name}_llm_extracted_reports')
+    processed_reports_meta_data_path = os.path.join(args.save_path, site, f'neurology_report_metadata_EEG_{site}.csv')
+    matched_eeg_report_recording_save_path = os.path.join(args.output_path, site)
     
     # Load data
     print("Loading metadata...")
